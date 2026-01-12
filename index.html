@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="icon" href="./icons/icon-32.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2c7be5">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Traductor a Código Morse con Fichas</title>
@@ -11,27 +14,36 @@
       --tile-bg: #fdf7e3;
       --tile-border: #c9b37f;
       --tile-shadow: rgba(0, 0, 0, 0.25);
-      --text-main: #222222;
+      --text-main: #222;
       --accent: #2c7be5;
-      --border-radius: 6px;
-      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --font-mono: "Fira Code", "Consolas", monospace;
+      --font-main: system-ui, sans-serif;
+      --font-mono: "Fira Code", monospace;
     }
 
-    * {
-      box-sizing: border-box;
+    /* 🌙 Modo oscuro */
+    body.dark {
+      --bg: #1e1f22;
+      --card-bg: #2a2c31;
+      --tile-bg: #3a3c42;
+      --tile-border: #5a5d66;
+      --tile-shadow: rgba(0, 0, 0, 0.6);
+      --text-main: #f0f0f0;
+      --accent: #6aa8ff;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       padding: 0;
       font-family: var(--font-main);
-      background: radial-gradient(circle at top, #ffffff 0, #e4e8f0 40%, #cfd5e0 100%);
+      background: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .app {
@@ -42,140 +54,72 @@
       background: var(--card-bg);
       border-radius: 12px;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: background 0.3s ease;
     }
 
-    h1 {
-      margin: 0 0 4px;
-      font-size: 1.8rem;
-      letter-spacing: 0.03em;
-    }
-
-    .subtitle {
-      margin: 0 0 20px;
-      font-size: 1rem;
-      color: #555;
-    }
-
-    .input-group {
-      margin-bottom: 16px;
-    }
-
-    label {
-      display: block;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
+    h1 { margin: 0 0 4px; font-size: 1.8rem; }
 
     textarea {
       width: 100%;
       min-height: 110px;
-      resize: vertical;
-      padding: 12px 14px;
-      font-family: var(--font-main);
+      padding: 12px;
       font-size: 1rem;
       border-radius: 10px;
       border: 1px solid #ccd1dd;
-      outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-      background-color: #fafbff;
+      background: #fafbff;
     }
 
-    textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(44, 123, 229, 0.15);
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 10px;
+    body.dark textarea {
+      background: #3a3c42;
+      border-color: #555;
+      color: #fff;
     }
 
     button {
       padding: 10px 18px;
       font-size: 1rem;
-      font-weight: 600;
       border-radius: 24px;
       border: none;
       cursor: pointer;
       background: var(--accent);
-      color: #ffffff;
-      box-shadow: 0 4px 10px rgba(44, 123, 229, 0.35);
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.2s ease;
+      color: #fff;
+      transition: 0.2s ease;
     }
 
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 15px rgba(44, 123, 229, 0.4);
-      background: #2562c4;
-    }
-
-    button:active {
-      transform: translateY(0);
-      box-shadow: 0 3px 8px rgba(44, 123, 229, 0.35);
-    }
-
-    .hint {
-      font-size: 0.85rem;
-      color: #666;
-    }
-
-    .output-wrapper {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid #e1e4f0;
-    }
-
-    .output-label {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .original-text {
-      font-size: 1rem;
-      color: #444;
-      margin-bottom: 10px;
-      word-break: break-word;
-    }
-
-    .original-text span {
-      font-weight: 700;
-      color: #222;
-    }
+    button:hover { transform: translateY(-2px); }
 
     .tiles-container {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 6px;
-      padding: 10px 6px;
-      min-height: 48px;
-      background: #f6f7fb;
+      padding: 10px;
+      background: #f0f2f7;
       border-radius: 10px;
-      border: 1px dashed #d0d5e5;
+      min-height: 48px;
     }
 
+    body.dark .tiles-container {
+      background: #2f3136;
+    }
+
+    /* 🎞️ Animación de fichas */
     .tile {
       min-width: 42px;
       padding: 8px 12px;
       background: var(--tile-bg);
-      border-radius: 6px;
       border: 1px solid var(--tile-border);
-      box-shadow: 0 3px 0 0 var(--tile-shadow);
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
+      border-radius: 6px;
+      box-shadow: 0 3px 0 var(--tile-shadow);
       font-family: var(--font-mono);
-      font-weight: 700;
       font-size: 1.25rem;
-      color: #26211a;
       position: relative;
+      animation: pop 0.25s ease-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.4); opacity: 0; }
+      80% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .tile-letter-label {
@@ -183,18 +127,12 @@
       bottom: -14px;
       right: 4px;
       font-size: 0.75rem;
-      font-weight: 700;
-      color: #7a6b4a;
       opacity: 0.8;
-      text-transform: uppercase;
     }
 
     .space-gap {
       width: 32px;
-      height: 1px;
-      margin: 0 6px;
-      border-bottom: 2px dotted #b0b5c5;
-      align-self: center;
+      border-bottom: 2px dotted #999;
       position: relative;
     }
 
@@ -202,216 +140,142 @@
       content: "espacio";
       position: absolute;
       top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 0.7rem;
-      color: #9a9fb5;
-      background: #f6f7fb;
-      padding: 0 2px;
+      opacity: 0.6;
     }
 
-    .status {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 4px;
-    }
-
-    .status-error {
-      color: #b00020;
-    }
-
-    .footer-note {
-      margin-top: 12px;
-      font-size: 0.85rem;
-      color: #666;
-    }
-
-    .footer-note code {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      background: #eceff5;
-      padding: 1px 3px;
-      border-radius: 3px;
-    }
-
-    /* 📱 Ajustes específicos para pantallas pequeñas */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.6rem;
-      }
-      .subtitle {
-        font-size: 0.95rem;
-      }
-      textarea {
-        font-size: 1.05rem;
-        min-height: 130px;
-      }
-      button {
-        width: 100%;
-        justify-content: center;
-      }
-      .tile {
-        min-width: 48px;
-        padding: 10px 14px;
-        font-size: 1.35rem;
-      }
-      .tile-letter-label {
-        bottom: -12px;
-        right: 3px;
-      }
-      .tiles-container {
-        gap: 12px;
-        padding: 12px 8px;
-      }
+      h1 { font-size: 1.6rem; }
+      textarea { font-size: 1.1rem; }
+      button { width: 100%; }
+      .tile { min-width: 48px; font-size: 1.35rem; }
     }
   </style>
 </head>
+
 <body>
   <div class="app">
     <h1>Traductor a código Morse</h1>
-    <p class="subtitle">Escribe un mensaje en español y verás su versión en Morse como fichas tipo Scrabble.</p>
 
-    <div class="input-group">
-      <label for="inputText">Texto en español</label>
-      <textarea id="inputText" placeholder="Ejemplo: Hola Miguel, esto es una prueba."></textarea>
+    <textarea id="inputText" placeholder="Escribe aquí tu mensaje..."></textarea>
+
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;">
+      <button id="btnTranslate">Traducir</button>
+      <button id="btnClear" style="background:#75809d;">Limpiar</button>
+      <button id="btnDarkMode" style="background:#444;">Modo oscuro</button>
+      <button id="btnPlay" style="background:#28a745;">Escuchar Morse</button>
     </div>
 
-    <div class="controls">
-      <button id="btnTranslate">Traducir a Morse</button>
-      <button id="btnClear" type="button" style="background:#75809d; box-shadow:0 4px 10px rgba(0,0,0,0.18);">
-        Limpiar
-      </button>
-      <span class="hint">Cada ficha representa una letra.</span>
-    </div>
-
-    <div class="output-wrapper">
-      <div class="output-label">Salida en código Morse:</div>
-      <div id="originalTextView" class="original-text"></div>
-      <div id="tilesContainer" class="tiles-container"></div>
-      <div id="status" class="status"></div>
-    </div>
-
-    <div class="footer-note">
-      Notas:
-      <ul style="margin:4px 0 0 18px; padding:0;">
-        <li>Las vocales acentuadas se normalizan: <code>á→A</code>, <code>é→E</code>, <code>í→I</code>, <code>ó→O</code>, <code>ú/ü→U</code>.</li>
-        <li>La letra <code>Ñ</code> usa el código Morse estándar <code>--.--</code>.</li>
-        <li>Los espacios se muestran como un separador punteado.</li>
-      </ul>
-    </div>
+    <div id="tilesContainer" class="tiles-container" style="margin-top:20px;"></div>
   </div>
 
   <script>
-    (function () {
-      const morseMap = {
-        "A": ".-","B": "-...","C": "-.-.","D": "-..","E": ".","F": "..-.","G": "--.","H": "....",
-        "I": "..","J": ".---","K": "-.-","L": ".-..","M": "--","N": "-.","Ñ": "--.--","O": "---",
-        "P": ".--.","Q": "--.-","R": ".-.","S": "...","T": "-","U": "..-","V": "...-","W": ".--",
-        "X": "-..-","Y": "-.--","Z": "--..","0": "-----","1": ".----","2": "..---","3": "...--",
-        "4": "....-","5": ".....","6": "-....","7": "--...","8": "---..","9": "----.","?": "..--..",
-        ".": ".-.-.-",",": "--..--","!": "-.-.--",":": "---...", ";": "-.-.-.","\"": ".-..-.",
-        "'": ".----.","/": "-..-.","-": "-....-","(": "-.--."," )": "-.--.-","&": ".-...",
-        "=": "-...-","+": ".-.-.","_": "..--.-","$": "...-..-","@": ".--.-."
-      };
+    const morseMap = {
+      "A": ".-","B": "-...","C": "-.-.","D": "-..","E": ".","F": "..-.","G": "--.","H": "....",
+      "I": "..","J": ".---","K": "-.-","L": ".-..","M": "--","N": "-.","Ñ": "--.--","O": "---",
+      "P": ".--.","Q": "--.-","R": ".-.","S": "...","T": "-","U": "..-","V": "...-","W": ".--",
+      "X": "-..-","Y": "-.--","Z": "--..","0": "-----","1": ".----","2": "..---","3": "...--",
+      "4": "....-","5": ".....","6": "-....","7": "--...","8": "---..","9": "----."
+    };
 
-      const accentMap = {
-        "Á": "A","É": "E","Í": "I","Ó": "O","Ú": "U","Ü": "U",
-        "á": "A","é": "E","í": "I","ó": "O","ú": "U","ü": "U"
-      };
+    const accentMap = { "á":"A","é":"E","í":"I","ó":"O","ú":"U","ü":"U","Á":"A","É":"E","Í":"I","Ó":"O","Ú":"U","Ü":"U" };
 
-      const inputText = document.getElementById("inputText");
-      const btnTranslate = document.getElementById("btnTranslate");
-      const btnClear = document.getElementById("btnClear");
-      const tilesContainer = document.getElementById("tilesContainer");
-      const status = document.getElementById("status");
-      const originalTextView = document.getElementById("originalTextView");
+    const inputText = document.getElementById("inputText");
+    const tilesContainer = document.getElementById("tilesContainer");
 
-      function normalizeChar(ch) {
-        if (accentMap[ch]) return accentMap[ch];
-        return ch.toUpperCase();
-      }
+    document.getElementById("btnTranslate").onclick = translate;
+    document.getElementById("btnClear").onclick = () => {
+      inputText.value = "";
+      tilesContainer.innerHTML = "";
+    };
 
-      function translateToTiles() {
-        const text = inputText.value || "";
-        tilesContainer.innerHTML = "";
-        originalTextView.innerHTML = "";
-        status.textContent = "";
+    document.getElementById("btnDarkMode").onclick = () => {
+      document.body.classList.toggle("dark");
+    };
 
-        if (!text.trim()) {
-          status.textContent = "Escribe un texto para convertirlo a código Morse.";
-          return;
+    function normalize(ch) {
+      if (accentMap[ch]) return accentMap[ch];
+      return ch.toUpperCase();
+    }
+
+    function translate() {
+      tilesContainer.innerHTML = "";
+      const text = inputText.value;
+
+      for (const ch of text) {
+        if (ch === " ") {
+          const gap = document.createElement("div");
+          gap.className = "space-gap";
+          tilesContainer.appendChild(gap);
+          continue;
         }
 
-        originalTextView.innerHTML = "<span>Texto original:</span> " + escapeHtml(text);
+        const n = normalize(ch);
+        if (!morseMap[n]) continue;
 
-        let unknownChars = new Set();
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.textContent = morseMap[n].replace(/\./g, "·").replace(/-/g, "—\u200A").trim();
 
-        for (const ch of text) {
-          if (ch === " ") {
-            const spaceElement = document.createElement("div");
-            spaceElement.className = "space-gap";
-            tilesContainer.appendChild(spaceElement);
-            continue;
-          }
+        const label = document.createElement("span");
+        label.className = "tile-letter-label";
+        label.textContent = n;
 
-          const normalized = normalizeChar(ch);
+        tile.appendChild(label);
+        tilesContainer.appendChild(tile);
+      }
+    }
 
-          if (!morseMap[normalized]) {
-            if (ch.trim() !== "") unknownChars.add(ch);
-            continue;
-          }
+    /* 🔊 Reproductor de Morse */
+    document.getElementById("btnPlay").onclick = () => {
+      const text = inputText.value;
+      playMorse(text);
+    };
 
-          const morseCode = morseMap[normalized];
+    function playMorse(text) {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const dot = 0.1;
+      const dash = dot * 3;
+      const freq = 600;
 
-          const tile = document.createElement("div");
-          tile.className = "tile";
-          tile.textContent = morseCode.replace(/\./g, "·").replace(/-/g, "—");
+      let t = ctx.currentTime;
 
-          const label = document.createElement("span");
-          label.className = "tile-letter-label";
-          label.textContent = normalized;
-          tile.appendChild(label);
-
-          tilesContainer.appendChild(tile);
+      for (const ch of text) {
+        if (ch === " ") {
+          t += dot * 7;
+          continue;
         }
 
-        if (!tilesContainer.hasChildNodes()) {
-          status.className = "status status-error";
-          status.textContent = "No se pudo generar ninguna ficha.";
-          return;
+        const n = normalize(ch);
+        const code = morseMap[n];
+        if (!code) continue;
+
+        for (const s of code) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.frequency.value = freq;
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          const dur = s === "." ? dot : dash;
+
+          gain.gain.setValueAtTime(1, t);
+          gain.gain.setValueAtTime(0, t + dur);
+
+          osc.start(t);
+          osc.stop(t + dur);
+
+          t += dur + dot;
         }
 
-        if (unknownChars.size > 0) {
-          status.className = "status status-error";
-          status.textContent =
-            "Caracteres omitidos: " +
-            Array.from(unknownChars).map(escapeHtml).join(" ");
-        } else {
-          status.className = "status";
-          status.textContent = "Conversión completada.";
-        }
+        t += dot * 2;
       }
-
-      function clearAll() {
-        inputText.value = "";
-        tilesContainer.innerHTML = "";
-        originalTextView.innerHTML = "";
-        status.textContent = "";
-        inputText.focus();
-      }
-
-      function escapeHtml(str) {
-        return str
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-      }
-
-      btnTranslate.addEventListener("click", translateToTiles);
-      btnClear.addEventListener("click", clearAll);
-    })();
+    }
+  </script>
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
   </script>
 </body>
 </html>

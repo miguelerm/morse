@@ -1,0 +1,21 @@
+{
+  "name": "Traductor Morse",
+  "short_name": "Morse",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1e1f22",
+  "theme_color": "#2c7be5",
+  "description": "Traductor a código Morse con fichas tipo Scrabble.",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
