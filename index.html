@@ -214,7 +214,7 @@
 
         const tile = document.createElement("div");
         tile.className = "tile";
-        tile.textContent = morseMap[n].replace(/\./g, "·").replace(/-/g, "—");
+        tile.textContent = morseMap[n].replace(/\./g, "·").replace(/-/g, "—\u200A").trim();
 
         const label = document.createElement("span");
         label.className = "tile-letter-label";
