@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Traductor a Código Morse con Fichas</title>
   <style>
     :root {
@@ -34,10 +35,10 @@
     }
 
     .app {
-      margin: 32px 16px;
-      padding: 24px 20px;
-      max-width: 900px;
+      margin: 24px 12px;
+      padding: 20px 18px;
       width: 100%;
+      max-width: 900px;
       background: var(--card-bg);
       border-radius: 12px;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
@@ -46,13 +47,13 @@
 
     h1 {
       margin: 0 0 4px;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       letter-spacing: 0.03em;
     }
 
     .subtitle {
       margin: 0 0 20px;
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #555;
     }
 
@@ -62,19 +63,19 @@
 
     label {
       display: block;
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-bottom: 6px;
     }
 
     textarea {
       width: 100%;
-      min-height: 90px;
+      min-height: 110px;
       resize: vertical;
-      padding: 10px 12px;
+      padding: 12px 14px;
       font-family: var(--font-main);
-      font-size: 0.95rem;
-      border-radius: 8px;
+      font-size: 1rem;
+      border-radius: 10px;
       border: 1px solid #ccd1dd;
       outline: none;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -89,16 +90,16 @@
     .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
       margin-bottom: 10px;
     }
 
     button {
-      padding: 8px 14px;
-      font-size: 0.9rem;
+      padding: 10px 18px;
+      font-size: 1rem;
       font-weight: 600;
-      border-radius: 20px;
+      border-radius: 24px;
       border: none;
       cursor: pointer;
       background: var(--accent);
@@ -119,7 +120,7 @@
     }
 
     .hint {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: #666;
     }
 
@@ -130,41 +131,41 @@
     }
 
     .output-label {
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-bottom: 8px;
     }
 
     .original-text {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #444;
       margin-bottom: 10px;
       word-break: break-word;
     }
 
     .original-text span {
-      font-weight: 600;
+      font-weight: 700;
       color: #222;
     }
 
     .tiles-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       align-items: flex-start;
       margin-bottom: 6px;
-      padding: 6px 4px;
+      padding: 10px 6px;
       min-height: 48px;
       background: #f6f7fb;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px dashed #d0d5e5;
     }
 
     .tile {
-      min-width: 36px;
-      padding: 6px 10px;
+      min-width: 42px;
+      padding: 8px 12px;
       background: var(--tile-bg);
-      border-radius: 4px;
+      border-radius: 6px;
       border: 1px solid var(--tile-border);
       box-shadow: 0 3px 0 0 var(--tile-shadow);
       display: inline-flex;
@@ -172,17 +173,16 @@
       align-items: center;
       font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       color: #26211a;
-      text-transform: none;
       position: relative;
     }
 
     .tile-letter-label {
       position: absolute;
-      bottom: -13px;
+      bottom: -14px;
       right: 4px;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: #7a6b4a;
       opacity: 0.8;
@@ -190,9 +190,9 @@
     }
 
     .space-gap {
-      width: 28px;
+      width: 32px;
       height: 1px;
-      margin: 0 4px;
+      margin: 0 6px;
       border-bottom: 2px dotted #b0b5c5;
       align-self: center;
       position: relative;
@@ -204,14 +204,14 @@
       top: -14px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       color: #9a9fb5;
       background: #f6f7fb;
       padding: 0 2px;
     }
 
     .status {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       color: #666;
       margin-top: 4px;
     }
@@ -222,34 +222,46 @@
 
     .footer-note {
       margin-top: 12px;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       color: #666;
     }
 
     .footer-note code {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       background: #eceff5;
       padding: 1px 3px;
       border-radius: 3px;
     }
 
+    /* 📱 Ajustes específicos para pantallas pequeñas */
     @media (max-width: 600px) {
-      .app {
-        padding: 18px 14px;
-        margin: 18px 10px;
-      }
       h1 {
-        font-size: 1.35rem;
+        font-size: 1.6rem;
+      }
+      .subtitle {
+        font-size: 0.95rem;
+      }
+      textarea {
+        font-size: 1.05rem;
+        min-height: 130px;
+      }
+      button {
+        width: 100%;
+        justify-content: center;
       }
       .tile {
-        min-width: 32px;
-        padding: 5px 8px;
-        font-size: 1rem;
+        min-width: 48px;
+        padding: 10px 14px;
+        font-size: 1.35rem;
       }
       .tile-letter-label {
         bottom: -12px;
         right: 3px;
+      }
+      .tiles-container {
+        gap: 12px;
+        padding: 12px 8px;
       }
     }
   </style>
@@ -261,7 +273,7 @@
 
     <div class="input-group">
       <label for="inputText">Texto en español</label>
-      <textarea id="inputText" placeholder="Ejemplo: Hola Miguel, esto es una prueba de código Morse."></textarea>
+      <textarea id="inputText" placeholder="Ejemplo: Hola Miguel, esto es una prueba."></textarea>
     </div>
 
     <div class="controls">
@@ -269,11 +281,11 @@
       <button id="btnClear" type="button" style="background:#75809d; box-shadow:0 4px 10px rgba(0,0,0,0.18);">
         Limpiar
       </button>
-      <span class="hint">Las letras se convierten en fichas. Cada ficha contiene el patrón Morse de esa letra.</span>
+      <span class="hint">Cada ficha representa una letra.</span>
     </div>
 
     <div class="output-wrapper">
-      <div class="output-label">Salida en código Morse (fichas):</div>
+      <div class="output-label">Salida en código Morse:</div>
       <div id="originalTextView" class="original-text"></div>
       <div id="tilesContainer" class="tiles-container"></div>
       <div id="status" class="status"></div>
@@ -282,9 +294,9 @@
     <div class="footer-note">
       Notas:
       <ul style="margin:4px 0 0 18px; padding:0;">
-        <li style="margin:2px 0;">Las vocales acentuadas se normalizan: <code>á→A</code>, <code>é→E</code>, <code>í→I</code>, <code>ó→O</code>, <code>ú/ü→U</code>.</li>
-        <li style="margin:2px 0;">La letra <code>Ñ</code> usa el código Morse estándar <code>--.--</code>.</li>
-        <li style="margin:2px 0;">Los espacios entre palabras se muestran como un separador punteado (“espacio”).</li>
+        <li>Las vocales acentuadas se normalizan: <code>á→A</code>, <code>é→E</code>, <code>í→I</code>, <code>ó→O</code>, <code>ú/ü→U</code>.</li>
+        <li>La letra <code>Ñ</code> usa el código Morse estándar <code>--.--</code>.</li>
+        <li>Los espacios se muestran como un separador punteado.</li>
       </ul>
     </div>
   </div>
@@ -292,76 +304,19 @@
   <script>
     (function () {
       const morseMap = {
-        "A": ".-",
-        "B": "-...",
-        "C": "-.-.",
-        "D": "-..",
-        "E": ".",
-        "F": "..-.",
-        "G": "--.",
-        "H": "....",
-        "I": "..",
-        "J": ".---",
-        "K": "-.-",
-        "L": ".-..",
-        "M": "--",
-        "N": "-.",
-        "Ñ": "--.--",
-        "O": "---",
-        "P": ".--.",
-        "Q": "--.-",
-        "R": ".-.",
-        "S": "...",
-        "T": "-",
-        "U": "..-",
-        "V": "...-",
-        "W": ".--",
-        "X": "-..-",
-        "Y": "-.--",
-        "Z": "--..",
-        "0": "-----",
-        "1": ".----",
-        "2": "..---",
-        "3": "...--",
-        "4": "....-",
-        "5": ".....",
-        "6": "-....",
-        "7": "--...",
-        "8": "---..",
-        "9": "----.",
-        ".": ".-.-.-",
-        ",": "--..--",
-        "?": "..--..",
-        "!": "-.-.--",
-        ":": "---...",
-        ";": "-.-.-.",
-        "\"": ".-..-.",
-        "'": ".----.",
-        "/": "-..-.",
-        "-": "-....-",
-        "(": "-.--.",
-        ")": "-.--.-",
-        "&": ".-...",
-        "=": "-...-",
-        "+": ".-.-.",
-        "_": "..--.-",
-        "$": "...-..-",
-        "@": ".--.-."
+        "A": ".-","B": "-...","C": "-.-.","D": "-..","E": ".","F": "..-.","G": "--.","H": "....",
+        "I": "..","J": ".---","K": "-.-","L": ".-..","M": "--","N": "-.","Ñ": "--.--","O": "---",
+        "P": ".--.","Q": "--.-","R": ".-.","S": "...","T": "-","U": "..-","V": "...-","W": ".--",
+        "X": "-..-","Y": "-.--","Z": "--..","0": "-----","1": ".----","2": "..---","3": "...--",
+        "4": "....-","5": ".....","6": "-....","7": "--...","8": "---..","9": "----.","?": "..--..",
+        ".": ".-.-.-",",": "--..--","!": "-.-.--",":": "---...", ";": "-.-.-.","\"": ".-..-.",
+        "'": ".----.","/": "-..-.","-": "-....-","(": "-.--."," )": "-.--.-","&": ".-...",
+        "=": "-...-","+": ".-.-.","_": "..--.-","$": "...-..-","@": ".--.-."
       };
 
       const accentMap = {
-        "Á": "A",
-        "É": "E",
-        "Í": "I",
-        "Ó": "O",
-        "Ú": "U",
-        "Ü": "U",
-        "á": "A",
-        "é": "E",
-        "í": "I",
-        "ó": "O",
-        "ú": "U",
-        "ü": "U"
+        "Á": "A","É": "E","Í": "I","Ó": "O","Ú": "U","Ü": "U",
+        "á": "A","é": "E","í": "I","ó": "O","ú": "U","ü": "U"
       };
 
       const inputText = document.getElementById("inputText");
@@ -372,9 +327,7 @@
       const originalTextView = document.getElementById("originalTextView");
 
       function normalizeChar(ch) {
-        if (accentMap[ch]) {
-          return accentMap[ch];
-        }
+        if (accentMap[ch]) return accentMap[ch];
         return ch.toUpperCase();
       }
 
@@ -393,22 +346,19 @@
 
         let unknownChars = new Set();
 
-        const chars = Array.from(text);
-        chars.forEach((ch, index) => {
+        for (const ch of text) {
           if (ch === " ") {
             const spaceElement = document.createElement("div");
             spaceElement.className = "space-gap";
             tilesContainer.appendChild(spaceElement);
-            return;
+            continue;
           }
 
-          let normalized = normalizeChar(ch);
+          const normalized = normalizeChar(ch);
 
           if (!morseMap[normalized]) {
-            if (ch.trim() !== "") {
-              unknownChars.add(ch);
-            }
-            return;
+            if (ch.trim() !== "") unknownChars.add(ch);
+            continue;
           }
 
           const morseCode = morseMap[normalized];
@@ -423,26 +373,22 @@
           tile.appendChild(label);
 
           tilesContainer.appendChild(tile);
-        });
+        }
 
         if (!tilesContainer.hasChildNodes()) {
           status.className = "status status-error";
-          status.textContent = "No se pudo generar ninguna ficha. Verifica el texto ingresado.";
+          status.textContent = "No se pudo generar ninguna ficha.";
           return;
         }
 
         if (unknownChars.size > 0) {
           status.className = "status status-error";
           status.textContent =
-            "Algunos caracteres no tienen representación Morse y se omitieron: " +
-            Array.from(unknownChars)
-              .slice(0, 20)
-              .map(escapeHtml)
-              .join(" ");
+            "Caracteres omitidos: " +
+            Array.from(unknownChars).map(escapeHtml).join(" ");
         } else {
           status.className = "status";
-          status.textContent =
-            "Conversión completada. Cada ficha representa una letra: por ejemplo, “A” → una ficha con “·—”, “E T” → dos fichas: “·” y “—”.";
+          status.textContent = "Conversión completada.";
         }
       }
 
@@ -465,13 +411,6 @@
 
       btnTranslate.addEventListener("click", translateToTiles);
       btnClear.addEventListener("click", clearAll);
-
-      inputText.addEventListener("keydown", function (e) {
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "enter") {
-          e.preventDefault();
-          translateToTiles();
-        }
-      });
     })();
   </script>
 </body>
