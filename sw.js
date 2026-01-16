@@ -1,7 +1,10 @@
-const CACHE_NAME = "morse-cache-v1";
+// Cambia este número en cada publicación para forzar actualización de caché
+const CACHE_NAME = "morse-cache-v2";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
+  "./index.css",
+  "./index.js",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
